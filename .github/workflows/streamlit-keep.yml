@@ -16,8 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 检查触发事件
-        - name: Check Trigger Event
+      - name: Check Trigger Event
       run: |
         echo "Workflow triggered by: ${{ github.event_name }}"
         if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
