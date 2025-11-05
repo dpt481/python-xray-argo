@@ -1,40 +1,38 @@
 name: Streamlit 自动唤醒
 
-
 on:
   workflow_dispatch:  # 允许手动触发
-  # 当 Uptime Kuma API 发送 'service-down-alert' 事件时触发此工作流。
   repository_dispatch:
     types: [service-down-alert]
   schedule:
-    - cron: '58 00 * * *'     # actions时间不准，不准确再酌情调整
-    
+    - cron: '58 16 * * *'   # 每天北京时间 00:58 执行
+
 jobs:
   restart-sg-apps:
     runs-on: ubuntu-latest
     name: Restart SG Apps
-    if: always()  
+    if: always()
     continue-on-error: true
-    
-steps:
-    - name: Check Trigger Event
-      run: |
-        echo "Workflow triggered by: ${{ github.event_name }}"
-        if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
-          echo "触发事件类型 (Event Type): ${{ github.event.action }}"
-          echo "收到来自 Uptime Kuma 的下线通知，开始执行自动恢复部署流程…"
-        elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-          echo "工作流被手动触发，开始执行部署…"
-        else
-          echo "工作流由计划任务触发，开始执行部署…"
-        fi
+
+    steps:
+      - name: Check Trigger Event
+        run: |
+          echo "Workflow triggered by: ${{ github.event_name }}"
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "触发事件类型 (Event Type): ${{ github.event.action }}"
+            echo "收到来自 Uptime Kuma 的下线通知，开始执行自动恢复部署流程…"
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "工作流被手动触发，开始执行部署…"
+          else
+            echo "工作流由计划任务触发，开始执行部署…"
+          fi
 
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
       - name: 安装 Chromium
         uses: browser-actions/setup-chromium@v2
-        
+
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
