@@ -8,9 +8,9 @@ on:
     - cron: '58 16 * * *'   # 每天北京时间 00:58 执行
 
 jobs:
-  restart-sg-apps:
+  restart-streamlit-apps:
     runs-on: ubuntu-latest
-    name: Restart SG Apps
+    name: Restart streamlit Apps
     if: always()
     continue-on-error: true
 
