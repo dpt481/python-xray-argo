@@ -6,7 +6,7 @@ on:
   # 当 Uptime Kuma API 发送 'service-down-alert' 事件时触发此工作流。
   repository_dispatch:
     types: [service-down-alert]
-schedule:
+  schedule:
     - cron: '58 00 * * *'     # actions时间不准，不准确再酌情调整
     
 jobs:
