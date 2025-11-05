@@ -16,7 +16,7 @@ jobs:
     if: always()  
     continue-on-error: true
     
-    steps:
+steps:
     - name: Check Trigger Event
       run: |
         echo "Workflow triggered by: ${{ github.event_name }}"
