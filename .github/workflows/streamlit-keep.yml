@@ -5,7 +5,7 @@ on:
   repository_dispatch:
     types: [service-down-alert]
   schedule:
-    - cron: '58 16 * * *'   # 每天北京时间 00:58 执行
+    - cron: '0 */12 * * *'   # 每隔12小时执行
 
 jobs:
   restart-streamlit-apps:
